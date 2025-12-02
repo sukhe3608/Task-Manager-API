@@ -1,11 +1,11 @@
 from sqlmodel import SQLModel, Field
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
 class Task(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    title: str
-    description: str
-    priority: str
-    status: str = "Pending"
-    created_at: datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    title: str = Field(nullable=False)
+    description: Optional[str] = Field(default=None)
+    priority: str = Field(nullable=False)   # "high", "medium", "low"
+    status: str = Field(nullable=False)     # "pending", "done", etc.
+    created_at: datetime = Field(default_factory=datetime.utcnow)
